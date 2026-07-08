@@ -8,12 +8,9 @@ if (!isset($_SESSION["eventos"])) {
 
 function addEvent(array $novoevento)
 {
-    $id = count($_SESSION["eventos"]);
-
-    $novoevento["id"] = ++$id;
-
+    $id = count($_SESSION["eventos"]) + 1;
+    $novoevento["id"] = $id;
     $_SESSION["eventos"][] = $novoevento;
-    echo "Evento adicionado com sucesso!";
 };
 
 function getEvents(): array

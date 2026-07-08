@@ -18,4 +18,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     addEvent($evento);
 
     header("Location: ../evento_criado.php");
+    exit;
 }

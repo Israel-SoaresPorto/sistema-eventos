@@ -11,7 +11,7 @@
     <h1>Evento Criado com Sucesso!</h1>
     <p>O evento foi criado com sucesso.</p>
     <a href="criar_evento.php">Criar outro evento</a>
-    <a href="listar_eventos.php">Listar eventos</a>
+    <a href="index.php">Listar eventos</a>
 </body>
 
 </html>
