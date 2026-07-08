@@ -9,7 +9,7 @@
 
 <body>
     <h1>Criar Evento</h1>
-    <form action="app/create_event.php" method="POST" enctype="multipart/form-data">
+    <form action="app/create_event.php" method="post" enctype="multipart/form-data">
         <label for="nome">Nome do Evento:</label>
         <input type="text" id="nome" name="nome" required><br><br>
 
@@ -18,6 +18,9 @@
 
         <label for="local">Local do Evento:</label>
         <input type="text" id="local" name="local" required><br><br>
+
+        <label for="descricao">Descrição do Evento:</label>
+        <textarea id="descricao" name="descricao" required></textarea><br><br>
 
         <input type="submit" value="Criar Evento">
     </form>

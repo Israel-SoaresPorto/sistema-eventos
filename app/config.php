@@ -1,14 +1,22 @@
 <?php
 
-$events = [];
-define("EVENTS", $events);
+session_start();
 
-function addEvent(array $event): void
-{
-    EVENTS[] = $event;
+if (!isset($_SESSION["eventos"])) {
+    $_SESSION["eventos"] = [];
 }
+
+function addEvent(array $novoevento)
+{
+    $id = count($_SESSION["eventos"]);
+
+    $novoevento["id"] = ++$id;
+
+    $_SESSION["eventos"][] = $novoevento;
+    echo "Evento adicionado com sucesso!";
+};
 
 function getEvents(): array
 {
-    return yield from EVENTS;
+    return $_SESSION["eventos"];
 }
