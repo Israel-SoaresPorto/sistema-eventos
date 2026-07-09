@@ -37,3 +37,14 @@ function updateEvent(int $id, array $novoevento)
     }
     return false;
 }
+
+function deleteEvent(int $id)
+{
+    foreach ($_SESSION["eventos"] as $key => $evento) {
+        if ($evento["id"] === $id) {
+            unset($_SESSION["eventos"][$key]);
+            return true;
+        }
+    }
+    return false;
+}
