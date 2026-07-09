@@ -45,6 +45,9 @@ $eventos = getEvents();
                                 <td><?php echo htmlspecialchars($event['data'] ?? '—'); ?></td>
                                 <td><?php echo htmlspecialchars($event['local'] ?? '—'); ?></td>
                                 <td>
+                                    <a href="editar_evento.php?id=<?php echo $event['id']; ?>">Editar</a>
+                                    <a>Excluir</a>
+                                </td>
                             </tr>        
                         <?php } ?>
                     </tbody>
