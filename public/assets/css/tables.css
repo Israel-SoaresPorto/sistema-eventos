@@ -1,0 +1,42 @@
+/* ============================================================================
+   TABELAS - Estilos de tabelas, cabeçalhos e linhas
+   ============================================================================ */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+thead {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+thead tr th {
+  padding: var(--spacing-md) var(--spacing-lg);
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid var(--color-primary-dark);
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--border-color);
+  transition: var(--transition);
+}
+
+tbody tr:hover {
+  background-color: var(--bg-secondary);
+}
+
+tbody tr:last-child {
+  border-bottom: none;
+}
+
+td {
+  padding: var(--spacing-md) var(--spacing-lg);
+  color: var(--text-secondary);
+}

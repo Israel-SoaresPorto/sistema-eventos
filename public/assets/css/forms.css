@@ -1,0 +1,103 @@
+/* ============================================================================
+   FORMULÁRIOS - SISTEMA DE EVENTOS
+   Estilos de inputs, labels, textareas, selects e botões de submit
+   ============================================================================ */
+
+form {
+  background-color: var(--bg-primary);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  max-width: 600px;
+}
+
+.form-group {
+  margin-bottom: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: 500;
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-primary);
+  display: block;
+}
+
+input[type='text'],
+input[type='email'],
+input[type='password'],
+input[type='date'],
+input[type='number'],
+input[type='tel'],
+textarea,
+select {
+  width: 100%;
+  padding: var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  transition: var(--transition);
+}
+
+input[type='text']:focus,
+input[type='email']:focus,
+input[type='password']:focus,
+input[type='date']:focus,
+input[type='number']:focus,
+input[type='tel']:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+input[type='text']:hover,
+input[type='email']:hover,
+input[type='password']:hover,
+input[type='date']:hover,
+input[type='number']:hover,
+input[type='tel']:hover,
+textarea:hover,
+select:hover {
+  border-color: var(--color-secondary-light);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+input[type='submit'],
+button[type='submit'] {
+  background-color: var(--color-primary);
+  color: white;
+  padding: var(--spacing-md) var(--spacing-xl);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  align-self: flex-start;
+}
+
+input[type='submit']:hover,
+button[type='submit']:hover {
+  background-color: var(--color-primary-dark);
+}
+
+input[type='submit']:focus,
+button[type='submit']:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+input[type='submit']:active,
+button[type='submit']:active {
+  transform: scale(0.98);
+}

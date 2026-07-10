@@ -1,0 +1,57 @@
+/* ============================================================================
+   UTILITÁRIOS - Classes utilitárias para margins, paddings, borders e outros ajustes rápidos
+   ============================================================================ */
+
+/* ========== MARGIN TOP ========== */
+.mt-sm {
+  margin-top: var(--spacing-sm);
+}
+
+.mt-md {
+  margin-top: var(--spacing-md);
+}
+
+.mt-lg {
+  margin-top: var(--spacing-lg);
+}
+
+/* ========== MARGIN BOTTOM ========== */
+.mb-sm {
+  margin-bottom: var(--spacing-sm);
+}
+
+.mb-md {
+  margin-bottom: var(--spacing-md);
+}
+
+.mb-lg {
+  margin-bottom: var(--spacing-lg);
+}
+
+/* ========== PADDING ========== */
+.p-md {
+  padding: var(--spacing-md);
+}
+
+.p-lg {
+  padding: var(--spacing-lg);
+}
+
+/* ========== BORDER RADIUS ========== */
+.rounded {
+  border-radius: var(--radius-md);
+}
+
+/* ========== SHADOWS ========== */
+.shadow {
+  box-shadow: var(--shadow-md);
+}
+
+/* ========== OPACITY ========== */
+.opacity-50 {
+  opacity: 0.5;
+}
+
+.opacity-75 {
+  opacity: 0.75;
+}

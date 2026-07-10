@@ -1,0 +1,39 @@
+/* ============================================================================
+   ALERTAS & STATUS - SISTEMA DE EVENTOS
+   Estilos de alertas, mensagens de sucesso, erro, aviso e informação
+   ============================================================================ */
+
+.alert {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-lg);
+  border-left: 4px solid;
+}
+
+/* ========== ALERTA SUCESSO ========== */
+.alert-success {
+  background-color: #dcfce7;
+  border-color: var(--color-success);
+  color: #166534;
+}
+
+/* ========== ALERTA ERRO ========== */
+.alert-error {
+  background-color: #fee2e2;
+  border-color: var(--color-danger);
+  color: #7f1d1d;
+}
+
+/* ========== ALERTA AVISO ========== */
+.alert-warning {
+  background-color: #fef3c7;
+  border-color: var(--color-warning);
+  color: #78350f;
+}
+
+/* ========== ALERTA INFORMAÇÃO ========== */
+.alert-info {
+  background-color: #cffafe;
+  border-color: var(--color-info);
+  color: #164e63;
+}

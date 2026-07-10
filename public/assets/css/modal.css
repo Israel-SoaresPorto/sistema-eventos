@@ -1,0 +1,65 @@
+/* ============================================================================
+   MODAL & DIALOG - Estilos de modais e diálogos de confirmação
+   ============================================================================ */
+
+dialog {
+  border: none;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  padding: var(--spacing-xl);
+  max-width: 90%;
+  width: 500px;
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+dialog > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+dialog p {
+  margin-bottom: 0;
+  color: var(--text-secondary);
+  font-size: var(--font-size-base);
+}
+
+dialog form {
+  display: flex;
+  gap: var(--spacing-md);
+  padding: 0;
+  box-shadow: none;
+  background-color: transparent;
+}
+
+dialog button {
+  flex: 1;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: var(--font-size-base);
+}
+
+dialog button[type='submit'] {
+  background-color: var(--color-danger);
+  color: white;
+}
+
+dialog button[type='submit']:hover {
+  background-color: #b91c1c;
+}
+
+dialog button[type='button'] {
+  background-color: var(--color-secondary);
+  color: white;
+}
+
+dialog button[type='button']:hover {
+  background-color: #475569;
+}

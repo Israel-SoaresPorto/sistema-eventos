@@ -1,0 +1,144 @@
+/* ============================================================================
+   RESPONSIVE DESIGN - Media queries para mobile, tablet e desktop
+   ============================================================================ */
+
+   
+
+/* ============================================================================
+   TABLET (640px+)
+   ============================================================================ */
+
+@media (min-width: 640px) {
+  main {
+    padding: var(--spacing-xl);
+  }
+
+  form {
+    max-width: 600px;
+  }
+
+  .grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  h1 {
+    font-size: var(--font-size-3xl);
+  }
+
+  dialog {
+    width: 500px;
+  }
+}
+
+/* ============================================================================
+   DESKTOP (1024px+)
+   ============================================================================ */
+
+@media (min-width: 1024px) {
+  main {
+    padding: var(--spacing-2xl);
+  }
+
+  form {
+    max-width: 700px;
+  }
+
+  .grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  header {
+    padding: var(--spacing-md) var(--spacing-2xl);
+  }
+
+  header > span {
+    margin-bottom: 0;
+    display: inline-block;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  nav {
+    gap: var(--spacing-lg);
+  }
+
+  dialog {
+    width: 550px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  }
+}
+
+/* ============================================================================
+   MOBILE FIRST - SMALL DEVICES (< 640px)
+   ============================================================================ */
+
+@media (max-width: 639px) {
+  :root {
+    --spacing-lg: 1rem;
+    --spacing-xl: 1.5rem;
+  }
+
+  main {
+    padding: var(--spacing-md);
+  }
+
+  h1 {
+    font-size: var(--font-size-2xl);
+  }
+
+  form {
+    padding: var(--spacing-lg);
+  }
+
+  table {
+    font-size: var(--font-size-sm);
+  }
+
+  thead tr th {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  td {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .btn-group {
+    flex-direction: column;
+  }
+
+  .btn-group .btn {
+    width: 100%;
+  }
+
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  dialog {
+    width: 90%;
+    max-width: 500px;
+    padding: var(--spacing-lg);
+  }
+
+  input[type='submit'],
+  button[type='submit'] {
+    width: 100%;
+    align-self: stretch;
+  }
+
+  nav {
+    flex-direction: column;
+  }
+
+  nav a {
+    width: 100%;
+    text-align: center;
+  }
+}
