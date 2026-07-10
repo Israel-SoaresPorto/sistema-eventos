@@ -16,61 +16,19 @@ $eventos = getEvents();
 </head>
 
 <body>
-    <header>
-        <h1>Lista de Eventos</h1>
-        <nav>
-            <a href="criar_evento.php">Criar Evento</a>
-        </nav>
-    </header>
+    <!-- Header -->
+    <?php include 'app/partials/header.php'; ?>
+
     <main>
+        <h1>Lista de Eventos</h1>
         <div>
-            <?php if (empty($eventos)) { ?>
-                <p>Nenhum evento cadastrado.</p>
-            <?php } else { ?>
-                <table border="1" cellpadding="6" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Título</th>
-                            <th>Data</th>
-                            <th>Local</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($eventos as $event) { ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($event['id'] ?? '—'); ?></td>
-                                <td><?php echo htmlspecialchars($event['nome'] ?? '—'); ?></td>
-                                <td><?php echo htmlspecialchars($event['data'] ?? '—'); ?></td>
-                                <td><?php echo htmlspecialchars($event['local'] ?? '—'); ?></td>
-                                <td>
-                                    <a href="detalhes_evento.php?id=<?php echo $event['id']; ?>">Detalhes</a>
-                                    <a href="editar_evento.php?id=<?php echo $event['id']; ?>">Editar</a>
-                                    <button
-                                        id="delete-event-button"
-                                        data-id="<?php echo $event['id']; ?>">Excluir</button>
-                                </td>
-                            </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
-            <?php } ?>
+            <!-- Tabela de eventos -->
+            <?php include 'app/partials/event_table.php'; ?>
         </div>
 
-        <dialog id="confirm-delete-dialog">
-            <div>
-                <p>Tem certeza que deseja excluir este evento?</p>
-                <form id="delete-form" method="post" action="app/delete_event.php">
-                    <input type="hidden" name="id" id="delete-event-id">
-                    <button type="submit">Sim</button>
-                    <button type="button" id="cancel-button">Não</button>
-                </form>
-            </div>
-        </dialog>
+        <!-- Modal de confirmação de exclusão -->
+        <?php include 'app/partials/delete_dialog.php'; ?>
     </main>
-
-    <script src="public/assets/js/index.js"></script>
 </body>
 
 </html>

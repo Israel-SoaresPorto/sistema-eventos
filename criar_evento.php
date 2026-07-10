@@ -1,3 +1,9 @@
+<?php
+
+$action = 'create_event.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,22 +14,15 @@
 </head>
 
 <body>
-    <h1>Criar Evento</h1>
-    <form action="app/create_event.php" method="post" enctype="multipart/form-data">
-        <label for="nome">Nome do Evento:</label>
-        <input type="text" id="nome" name="nome" required><br><br>
+    <!-- Header -->
+    <?php include 'app/partials/header.php'; ?>
 
-        <label for="data">Data do Evento:</label>
-        <input type="date" id="data" name="data" required><br><br>
+    <main>
+        <h1>Criar Evento</h1>
 
-        <label for="local">Local do Evento:</label>
-        <input type="text" id="local" name="local" required><br><br>
-
-        <label for="descricao">Descrição do Evento:</label>
-        <textarea id="descricao" name="descricao" required></textarea><br><br>
-
-        <input type="submit" value="Criar Evento">
-    </form>
+        <!-- Formulário de evento -->
+        <?php include 'app/partials/event_form.php'; ?>
+    </main>
 </body>
 
 </html>
