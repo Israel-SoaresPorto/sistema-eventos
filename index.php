@@ -1,7 +1,20 @@
 <?php
 
 require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/constants.php';
 
-$home = new \App\Controller\Pages\Home();
+use Core\Router;
+use Core\Http\Response;
 
-echo $home->index();
+$router = new Router(URL_BASE);
+
+$router->get('/', [function () {
+    return new Response("Hello, World!", 200);
+}]);
+
+$router->get('/home', [function () {
+    return new Response(\App\Controller\Pages\Home::index(), 200);
+}]);
+
+$response = $router->dispatch();
+$response->sendResponse();
