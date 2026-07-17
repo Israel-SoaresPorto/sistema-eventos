@@ -130,6 +130,13 @@ class Router
         $uri = $this->getUri();
         $httpMethod = $this->request->getMethod();
 
+        if($this->prefix && strpos($uri, $this->prefix) === 0) {
+            // Remove o prefixo da URI para correspondência com as rotas registradas
+            $uri = substr($uri, strlen($this->prefix));
+        }
+
+        $uri = '/' . ltrim($uri, '/'); // Garante que a URI comece com uma barra
+
         // Percorre as rotas registradas para encontrar uma correspondência com o caminho e método da requisição
         foreach ($this->routes as $pattern => $methods) {
             // Verifica se o padrão da rota corresponde ao caminho da requisição
@@ -155,10 +162,8 @@ class Router
 
     /**
      * Dispara a rota correspondente ao método e caminho especificados
-     * @param string $method Método HTTP da rota (GET, POST, etc.)
-     * @param string $path Caminho da rota
      */
-    public function dispatch(string $method, string $path)
+    public function dispatch() : Response
     {
         try {
             $route = $this->getRoute();
