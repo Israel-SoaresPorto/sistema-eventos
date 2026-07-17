@@ -1,0 +1,8 @@
+{
+    "name": "sistemas/eventos",
+    "description": "Sistema de gerenciamento de eventos",
+    "autoload": {
+        "App\\": "app/",
+        "Core\\": "core/"
+    }
+}
