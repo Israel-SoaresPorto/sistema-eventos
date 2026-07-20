@@ -135,6 +135,7 @@ class Router
 
             //Remoção de Base da URL
             $uri = str_replace($this->baseUrl, "", $uri);
+            $uri = parse_url($uri, PHP_URL_PATH) ?? '/';
 
             // Itera sobre as rotas registradas para encontrar uma correspondência
             foreach (self::$routes as $route) {
