@@ -9,182 +9,186 @@ use Exception;
 class Router
 {
     /**
-     * URL base do roteador
+     * Base URL do aplicativo
      * @var string
      */
-    private string $urlBase = '';
-
+    private string $baseUrl;
     /**
-     * Prefixo da URL do roteador
-     * @var string
-     */
-    private string $prefix = '';
-
-    /**
-     * Rotas registradas no roteador
+     * Array de rotas registradas
      * @var array
      */
-    private array $routes = [];
+    private static array $routes = [];
 
-    /**
-     * Instância da requisição HTTP
-     * @var Request
-     */
-    private Request $request;
-
-    /**
-     * Instância da resposta HTTP
-     * @var Response
-     */
-    private Response $response;
-
-    public function __construct(string $urlBase = URL_BASE)
+    public function __construct(string $baseUrl)
     {
-        $this->request = new Request();
-        $this->urlBase = $urlBase;
-        $this->setPrefix();
+        $this->baseUrl = $baseUrl;
+        // Inicializa o array de rotas
+        self::$routes = [];
+    }
+
+
+    /**
+     * Registra uma rota GET
+     * @param string $uri
+     * @param array $action
+     */
+    public static function get(string $uri, array $action): void
+    {
+        self::addRouter("GET", $uri, $action);
     }
 
     /**
-     * Retorna a URI da requisição
-     * @return string
+     * Registra uma rota POST
+     * @param string $uri
+     * @param array $action
      */
-    public function getUri(): string
+    public static function post(string $uri, array $action): void
     {
-        return $this->request->getUri();
+        self::addRouter("POST", $uri, $action);
     }
 
     /**
-     * Define o prefixo da URL do roteador
+     * Adiciona uma rota ao array de rotas registradas
+     * @param string $method
+     * @param string $uri
+     * @param array $action
      */
-    public function setPrefix(): void
-    {
-        $url_parsed = parse_url($this->urlBase, PHP_URL_PATH) ?? '';
-        $this->prefix = rtrim($url_parsed, '/');
+    private static function addRouter(
+        string $method,
+        string $uri,
+        array $action,
+    ): void {
+        self::$routes[] = [
+            "method" => $method,
+            "uri" => $uri,
+            "action" => $action,
+        ];
     }
 
     /**
-     * Adiciona uma rota ao roteador
-     * @param string $method Método HTTP da rota (GET, POST, etc.)
-     * @param string $route Caminho da rota
-     * @param array $params Parâmetros da rota (controller, action, etc.)
+     * Verifica se a rota atual corresponde a uma rota registrada
+     * @param string $routeUri
+     * @param string $requestUri
+     * @return bool|array Retorna false se não houver correspondência, ou um array associativo com os parâmetros da rota se houver correspondência
      */
-    public function addRoute(string $method, string $route, array $params = []): void
-    {
-        // Percorre os parâmetros para verificar se há uma função anônima (Closure) e a define como controlador
-        foreach ($params as $key => $value) {
-            if ($value instanceof \Closure) {
-                $params['controller'] = $value;
-                // Remove o parâmetro da lista de parâmetros
-                unset($params[$key]);
-                continue;
+    private static function matchRoute(
+        string $routeUri,
+        string $requestUri,
+    ): bool|array {
+        // Extrai os nomes dos parâmetros da rota
+        $paramNames = [];
+
+        // Encontra todos os parâmetros na rota usando regex
+        preg_match_all("/\{([^}]+)\}/", $routeUri, $matches);
+        $paramNames = $matches[1];
+
+        // Substitui os parâmetros na rota por regex para capturar os valores correspondentes na URI da requisição
+        $pattern = preg_replace("/\{([^}]+)\}/", "([^/]+)", $routeUri);
+        $pattern = "#^$pattern$#";
+
+
+        // Verifica se a URI da requisição corresponde ao padrão da rota
+        if (preg_match($pattern, $requestUri, $matches)) {
+            array_shift($matches); // remove match completo
+
+            // Cria um array associativo com os nomes dos parâmetros e seus valores correspondentes
+            $paramsAssoc = [];
+
+            // Itera sobre os nomes dos parâmetros e seus valores correspondentes
+            foreach ($paramNames as $index => $name) {
+                $paramsAssoc[$name] = $matches[$index] ?? null;
             }
+
+            // Retorna o array associativo com os parâmetros da rota
+            return $paramsAssoc;
         }
 
-        // Define os parâmetros padrão da rota
-        $params['variables'] = [];
-        // Expressão regular para identificar variáveis na rota
-        $patternVariable = '/{(.*?)}/';
-
-        // Verifica se a rota contém variáveis e as substitui por expressões regulares 
-        if (preg_match_all($patternVariable, $route, $matches)) {
-            $route = preg_replace($patternVariable, '(.*?)', $route);
-            $params['variables'] = $matches[1];
+        // Se a URI da requisição for exatamente igual à URI da rota, retorna um array vazio
+        if ($routeUri === $requestUri) {
+            return [];
         }
 
-        // Cria o padrão da rota para correspondência usando expressões regulares
-        $patternRoute = '/^' . str_replace('/', '\/', $route) . '$/';
-
-        // Armazena a rota no array de rotas do roteador
-        $this->routes[$patternRoute][$method] = $params;
+        // Se não houver correspondência, retorna false
+        return false;
     }
 
     /**
-     * Adiciona uma rota GET ao roteador
-     * @param string $route Caminho da rota
-     * @param array $params Parâmetros da rota (controller, action, etc.)
+     * Dispara a rota correspondente à requisição
+     * @return void
      */
-    public function get(string $route, array $params = []): void
-    {
-        $this->addRoute('GET', $route, $params);
-    }
-
-    /**
-     * Adiciona uma rota POST ao roteador
-     * @param string $route Caminho da rota
-     * @param array $params Parâmetros da rota (controller, action, etc.)
-     */
-    public function post(string $route, array $params = []): void
-    {
-        $this->addRoute('POST', $route, $params);
-    }
-
-    /**
-     * Obtém a rota correspondente ao caminho e método da requisição
-     * @return array 
-     * @throws Exception 
-     */
-    private function getRoute(): array
-    {
-        // Obtém a URI da requisição e o método HTTP
-        $uri = $this->getUri();
-        $httpMethod = $this->request->getMethod();
-
-        if($this->prefix && strpos($uri, $this->prefix) === 0) {
-            // Remove o prefixo da URI para correspondência com as rotas registradas
-            $uri = substr($uri, strlen($this->prefix));
-        }
-
-        $uri = '/' . ltrim($uri, '/'); // Garante que a URI comece com uma barra
-
-        // Percorre as rotas registradas para encontrar uma correspondência com o caminho e método da requisição
-        foreach ($this->routes as $pattern => $methods) {
-            // Verifica se o padrão da rota corresponde ao caminho da requisição
-            if (preg_match($pattern, $uri, $matches)) {
-
-                // Verifica se o método HTTP da requisição corresponde ao método da rota
-                if (isset($methods[$httpMethod])) {
-                    unset($matches[0]); // Remove o primeiro elemento do array de correspondências (o caminho completo)
-
-                    $keys = $methods[$httpMethod]['variables'];
-                    $methods[$httpMethod]['variables'] = array_combine($keys, $matches); // Combina as variáveis da rota com os valores correspondentes
-                    $methods[$httpMethod]['variables']['request'] = $this->request; // Adiciona a instância da requisição aos parâmetros da rota
-
-                    return $methods[$httpMethod]; // Retorna os parâmetros da rota correspondente
-                }
-
-                throw new Exception("Método não permitido para a rota: $uri", 405);
-            }
-        }
-
-        throw new Exception("Rota não encontrada: $uri", 404);
-    }
-
-    /**
-     * Dispara a rota correspondente ao método e caminho especificados
-     */
-    public function dispatch() : Response
+    public function dispatch(): void
     {
         try {
-            $route = $this->getRoute();
+            // Cria uma instância da classe Request para obter informações sobre a requisição
+            $request = new Request();
+            $method = $request->getMethod();
+            $uri = $request->getUri();
 
-            if (!isset($route['controller'])) {
-                throw new Exception("Erro do servidor", 500);
+            // Obtém o caminho base da URL do aplicativo
+            $basePath = parse_url($this->baseUrl, PHP_URL_PATH);
+
+            // Se a URI da requisição começar com o caminho base, remove o caminho base da URI
+            if ($basePath && strpos($uri, $basePath) === 0) {
+                // Remove o caminho base da URL da requisição
+                $uri = substr($uri, strlen($basePath));
             }
 
-            $args = [];
+            //Remoção de Base da URL
+            $uri = str_replace($this->baseUrl, "", $uri);
 
-            $reflection = new \ReflectionFunction($route['controller']);
+            // Itera sobre as rotas registradas para encontrar uma correspondência
+            foreach (self::$routes as $route) {
+                // Verifica se o método da requisição corresponde ao método da rota
+                if ($route["method"] !== $method) {
+                    continue;
+                }
 
-            foreach ($reflection->getParameters() as $param) {
-                $name = $param->getName();
-                $args[] = $route['variables'][$name] ?? '';   
+                // Verifica se a URI da requisição corresponde à URI da rota, considerando parâmetros
+                $match = self::matchRoute($route["uri"], $uri);
+
+                // Se houver correspondência, executa a ação associada à rota
+                if ($match !== false) {
+
+                    // Extrai o tipo, o controller e o método da ação da rota
+                    [$type, $controller, $methodAction] = $route["action"];
+
+                    // Monta o namespace completo do controller
+                    $controllerNameSpace = "App\\Controllers\\{$type}\\{$controller}";
+
+                    // Verifica se a classe do controller existe
+                    if (!class_exists($controllerNameSpace)) {
+                        throw new Exception(
+                            "Controller $controllerNameSpace not found",
+                        );
+                    }
+
+                    // Instancia o controller e chama o método correspondente, passando a requisição e os parâmetros da rota
+                    $instance = new $controllerNameSpace();
+
+                    // Executa o método passando os valores dos parâmetros
+                    $response = $instance->$methodAction(
+                        $request,
+                        ...array_values($match),
+                    );
+
+                    //Se o controller devolover uma resposta, envia para o navegador
+                    if ($response instanceof Response) {
+                        $response->sendResponse();
+                    }
+                    return; // Interrompe o loop pois já encontrou a rota
+                }
             }
 
-            return call_user_func_array($route['controller'], $args);
-
+            // Se não houver correspondência, retorna uma resposta 404
+            $response = new Response("Página não encontrada", 404);
+            $response->sendResponse();
         } catch (Exception $e) {
-            return new Response($e->getMessage(), $e->getCode() ?: 500);
+            // Em caso de erro, retorna uma resposta 500 com a mensagem de erro
+            $response = new Response(
+                "Erro interno do servidor: " . $e->getMessage(),
+                500
+            );
+            $response->sendResponse();
         }
     }
 }
