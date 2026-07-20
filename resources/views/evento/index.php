@@ -1,11 +1,3 @@
-<?php
-
-include 'app/config.php';
-
-$eventos = getEvents();
-
-?>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -18,17 +10,17 @@ $eventos = getEvents();
 
 <body>
     <!-- Header -->
-    <?php include 'app/partials/header.php'; ?>
+    <?php include BASE_DIR . '/resources/components/evento/header.php'; ?>
 
     <main>
         <h1>Lista de Eventos</h1>
         <div>
             <!-- Tabela de eventos -->
-            <?php include 'app/partials/event_table.php'; ?>
+            <?php include BASE_DIR . '/resources/components/evento/event_table.php'; ?>
         </div>
 
         <!-- Modal de confirmação de exclusão -->
-        <?php include 'app/partials/delete_dialog.php'; ?>
+        <?php include BASE_DIR . '/resources/components/evento/delete_dialog.php'; ?>
     </main>
 </body>
 

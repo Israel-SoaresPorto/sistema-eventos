@@ -1,7 +1,7 @@
 <header>
     <span>Sistema de Eventos</span>
     <nav>
-        <a href="index.php">Eventos</a>
-        <a href="criar_evento.php">Criar Evento</a>
+        <a href="<?= URL_BASE . '/eventos' ?>">Eventos</a>
+        <a href="<?= URL_BASE . '/eventos/criar' ?>">Criar Evento</a>
     </nav>
 </header>

@@ -1,11 +1,3 @@
-<?php 
-
-include 'app/list_event.php'; 
-
-$action = 'update_event.php';
-
-?>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -13,19 +5,24 @@ $action = 'update_event.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Eventos | Editar Evento</title>
-    <link rel="stylesheet" href="public/assets/css/style.css">
+    <link rel="stylesheet" href="../../public/assets/css/style.css">
 </head>
 
 <body>
-    <?php include 'app/partials/header.php'; ?>
+    <?php include BASE_DIR . '/resources/components/evento/header.php'; ?>
 
     <main>
         <h1>Editar Evento</h1>
 
+        <?php if (empty($evento)) : ?>
+            <p>Evento não encontrado.</p>
+            <a href="<?= URL_BASE ?>/eventos" class="btn btn-primary">← Voltar para Eventos</a> 
+        <?php endif; ?>
+
         <!-- Formulário de evento -->
-        <?php include 'app/partials/event_form.php'; ?>
+        <?php include BASE_DIR . '/resources/components/evento/event_form.php'; ?>
         
-        <a href="detalhes_evento.php?id=<?php echo $eventoId; ?>" class="btn btn-secondary" style="margin-top: var(--spacing-lg);">← Voltar</a>
+        <a href="<?= URL_BASE . "/eventos/" . $evento->getId() ?>" class="btn btn-secondary" style="margin-top: var(--spacing-lg);">← Voltar</a>
     </main>
 </body>
 
