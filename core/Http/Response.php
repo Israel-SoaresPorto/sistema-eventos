@@ -31,7 +31,7 @@ class Response
     public function __construct(string $content, int $statusCode = 200, string $contentType = 'text/html')
     {
         $this->statusCode = $statusCode;
-        $this->headers = getallheaders();
+        $this->headers = getallheaders() ?? [];
         $this->contentType = $contentType;
         $this->body = $content;
     }
@@ -101,5 +101,21 @@ class Response
                 echo $this->body;
                 break;
         }
+    }
+
+    /**
+     * Redireciona para uma URL específica
+     * @param string $url
+     * @param int $statusCode
+     */
+    public function redirect(string $url, int $statusCode = 302) : void
+    {
+        // Define o código de status HTTP e o cabeçalho de localização
+        $this->setStatusCode($statusCode);
+        $this->setHeader('Location', $url);
+        $this->setBody('');
+        $this->sendHeaders();
+        
+        exit; // Certifique-se de encerrar a execução após o redirecionamento
     }
 }
