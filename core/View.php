@@ -12,7 +12,7 @@ class View
      */
     private static function getViewPath(string $view): string | bool
     {
-        $file = __DIR__ . '/../public/view/' . $view . '.php';
+        $file = __DIR__ . '/../resources/views/' . $view . '.php';
 
         if (!file_exists($file)) {
             throw new \Exception("View not found: $view");

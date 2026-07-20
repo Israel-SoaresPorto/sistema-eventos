@@ -1,5 +1,9 @@
-# Liga o Rewrite
-RewriteEngine on
+RewriteEngine On
 
+# Redireciona raiz para public
+RewriteRule ^$ public/index.php [L]
+
+# Todo o resto também vai para public/index.php
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ ./index.php [QSA,NC]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ public/index.php [L]
