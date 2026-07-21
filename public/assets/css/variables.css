@@ -14,14 +14,19 @@
   --color-secondary-text: #ffffff;
   --color-secondary-light: #94a3b8;
   --color-secondary-light-text: #ffffff;
+  --color-secondary-dark: #475569;
+  --color-secondary-dark-text: #ffffff;
   --color-success: #16a34a;
   --color-success-text: #ffffff;
   --color-danger: #dc2626;
   --color-danger-text: #ffffff;
+  --color-danger-dark: #b91c1c;
   --color-warning: #f59e0b;
   --color-warning-text: #ffffff;
+  --color-warning-dark: #b45309;
   --color-info: #0891b2;
   --color-info-text: #ffffff;
+  --color-info-dark: #0e7490;
 
   /* ========== BACKGROUNDS ========== */
   --bg-primary: #ffffff;
@@ -36,6 +41,13 @@
   /* ========== BORDERS ========== */
   --border-color: #e2e8f0;
   --border-color-dark: #cbd5e1;
+
+  /* ========== CONTAINERS ========== */
+  --container-xs: 28rem; /* 448px */
+  --container-sm: 40rem; /* 640px */
+  --container-md: 48rem; /* 768px */
+  --container-lg: 64rem; /* 1024px */
+  --container-xl: 80rem; /* 1280px */
 
   /* ========== SPACING ========== */
   --spacing-xs: 0.25rem;

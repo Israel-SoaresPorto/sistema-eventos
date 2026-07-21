@@ -12,14 +12,14 @@
     <!-- Header -->
     <?php include BASE_DIR . '/resources/components/evento/header.php'; ?>
 
-    <main>
+    <main class="container">
         <?php if (empty($evento)) : ?>
             <p>Evento não encontrado.</p>
             <a href="<?= URL_BASE ?>/eventos" class="btn btn-primary">← Voltar para Eventos</a>
         <?php else : ?>
             <h1>Detalhes do Evento</h1>
 
-            <div style="background-color: var(--bg-primary); padding: var(--spacing-xl); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); max-width: 600px;">
+            <div class="box-container">
                 <div class="form-group">
                     <label>Nome do Evento:</label>
                     <p><strong><?php echo htmlspecialchars($evento->getNome()); ?></strong></p>

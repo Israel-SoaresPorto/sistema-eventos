@@ -16,6 +16,10 @@
   white-space: nowrap;
 }
 
+.btn:is(a) {
+  text-decoration: none;
+}
+
 .btn:focus {
   outline: 2px solid;
   outline-offset: 2px;
@@ -24,11 +28,12 @@
 /* ========== BOTÃO PRIMÁRIO ========== */
 .btn-primary {
   background-color: var(--color-primary);
-  color: white;
+  color: var(--color-primary-text);
 }
 
 .btn-primary:hover {
   background-color: var(--color-primary-dark);
+  color: var(--color-primary-text);
 }
 
 .btn-primary:focus {
@@ -38,11 +43,12 @@
 /* ========== BOTÃO SECUNDÁRIO ========== */
 .btn-secondary {
   background-color: var(--color-secondary);
-  color: white;
+  color: var(--color-secondary-text);
 }
 
 .btn-secondary:hover {
-  background-color: #475569;
+  background-color: var(--color-secondary-dark);
+  color: var(--color-secondary-dark-text);
 }
 
 .btn-secondary:focus {
@@ -52,7 +58,7 @@
 /* ========== BOTÃO SUCESSO ========== */
 .btn-success {
   background-color: var(--color-success);
-  color: white;
+  color: var(--color-success-text);
 }
 
 .btn-success:hover {
@@ -66,7 +72,7 @@
 /* ========== BOTÃO PERIGO ========== */
 .btn-danger {
   background-color: var(--color-danger);
-  color: white;
+  color: var(--color-danger-text);
 }
 
 .btn-danger:hover {

@@ -11,7 +11,7 @@
 <body>
     <?php include BASE_DIR . '/resources/components/evento/header.php'; ?>
 
-    <main>
+    <main class="container">
         <h1>Editar Evento</h1>
 
         <?php if (empty($evento)) : ?>
@@ -22,7 +22,7 @@
         <!-- Formulário de evento -->
         <?php include BASE_DIR . '/resources/components/evento/event_form.php'; ?>
         
-        <a href="<?= URL_BASE . "/evento/" . $evento->getId() ?>" class="btn btn-secondary" style="margin-top: var(--spacing-lg);">← Voltar</a>
+        <a href="<?= URL_BASE . "/evento/" . $evento->getId() ?>" class="btn btn-secondary mt-lg">← Voltar</a>
     </main>
 </body>
 

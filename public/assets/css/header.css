@@ -10,6 +10,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 100;
+  width: 100%;
 }
 
 header > span {
@@ -27,7 +28,9 @@ nav {
 }
 
 nav a {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: var(--spacing-sm) var(--spacing-lg);
   background-color: var(--color-primary);
   color: var(--color-primary-text);
@@ -35,6 +38,7 @@ nav a {
   font-weight: 500;
   transition: var(--transition);
   border: 2px solid transparent;
+  width: 100%;
 }
 
 nav a:hover {

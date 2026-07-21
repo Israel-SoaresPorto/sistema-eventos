@@ -11,16 +11,16 @@
 <body>
     <!-- Header -->
     <?php include BASE_DIR . '/resources/components/evento/header.php'; ?>
-    
+
     <main>
         <div class="alert alert-success">
             <?php if (empty($action) || empty($message)) : ?>
                 <p>Houve um erro ao processar a ação. Por favor, tente novamente.</p>
-                <a href="<?= URL_BASE ?>/eventos" class="btn btn-primary" style="margin-top: var(--spacing-md);">← Voltar para Eventos</a>
+                <a href="<?= URL_BASE ?>/eventos" class="btn btn-primary mt-md">← Voltar para Eventos</a>
             <?php else : ?>
                 <h1>Evento <?= ucfirst($action) ?> com Sucesso!</h1>
                 <p>O <?= $message ?></p>
-                <a href="<?= URL_BASE ?>/eventos" class="btn btn-primary" style="margin-top: var(--spacing-md);">← Voltar para Eventos</a>
+                <a href="<?= URL_BASE ?>/eventos" class="btn btn-primary mt-md">← Voltar para Eventos</a>
             <?php endif; ?>
         </div>
     </main>
