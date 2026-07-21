@@ -1,6 +1,5 @@
 /* ============================================================================
-   FORMULÁRIOS - SISTEMA DE EVENTOS
-   Estilos de inputs, labels, textareas, selects e botões de submit
+   FORMULÁRIOS - Estilos de inputs, labels, textareas, selects e botões de submit
    ============================================================================ */
 
 form {
@@ -8,7 +7,7 @@ form {
   padding: var(--spacing-xl);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
-  max-width: 600px;
+  width: 100%;
 }
 
 .form-group {
@@ -69,7 +68,7 @@ select:hover {
 
 textarea {
   resize: vertical;
-  min-height: 120px;
+  min-height: 7.5rem;
 }
 
 input[type='submit'],

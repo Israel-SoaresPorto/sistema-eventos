@@ -3,17 +3,25 @@
    ============================================================================ */
 
 .container {
-  max-width: 1200px;
+  max-width: var(--container-xl);
   width: 100%;
   margin: 0 auto;
-  padding: 0 var(--spacing-lg);
+  padding: var(--spacing-lg);
+}
+
+.box-container {
+  background-color: var(--bg-primary);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  width: 100%;
 }
 
 /* ========== GRID ========== */
 .grid {
   display: grid;
   gap: var(--spacing-lg);
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
 }
 
 .grid-2 {
@@ -50,4 +58,8 @@
 
 .text-right {
   text-align: right;
+}
+
+.margin-top {
+  margin-top: var(--spacing-lg);
 }

@@ -1,28 +1,30 @@
 # 📅 Sistema de Eventos
 
-Aplicativo web simples para gerenciar eventos, permitindo criar, listar, visualizar, editar e excluir informações sobre eventos. Desenvolvido como projeto de estudos para demonstrar conceitos fundamentais de desenvolvimento web com PHP.
+Aplicativo web simples para gerenciar eventos, permitindo criar, listar, visualizar, editar e excluir informações sobre eventos. Desenvolvido como projeto de estudos para demonstrar conceitos fundamentais de desenvolvimento web e a aplicação do padrão de arquitetura MVC com PHP.
 
 ## Visão Geral
 
-Este projeto implementa um sistema CRUD completo com navegação simples e fluxo claro para o usuário:
+Este projeto implementa um sistema CRUD completo com navegação simples e fluxo claro para o usuário, agora estruturado em MVC:
 
 - **Listar** eventos cadastrados
 - **Criar** novos eventos com nome, data, local e descrição
 - **Visualizar** os detalhes de um evento em uma página dedicada
 - **Editar** eventos existentes
 - **Excluir** eventos com confirmação de segurança
-- **Receber feedback** com a página de confirmação `sucesso.php`
+- **Receber feedback** com a página de confirmação de sucesso
 
 ## Conceitos Aplicados
 
-- PHP para lógica de backend e processamento de formulários
+- Padrão de Arquitetura MVC (Model-View-Controller)
+- Roteamento HTTP personalizado (Router e Front Controller)
+- Padrão de Projeto Repository (`EventoRepository`) para abstração de dados
+- POO (Programação Orientada a Objetos) no PHP
+- Autoloading de classes com Composer (PSR-4)
 - Armazenamento temporário com `$_SESSION`
 - Operações CRUD (Create, Read, Update, Delete)
 - Interatividade com JavaScript vanilla
 - Uso do Dialog API para confirmações
-- Separação entre páginas, formulários e partials reutilizáveis
-- Passagem de parâmetros via GET e POST
-- Sanitização básica com `htmlspecialchars()`
+- Componentização de views com partials reutilizáveis
 
 ## Funcionalidades principais
 
@@ -32,127 +34,88 @@ Este projeto implementa um sistema CRUD completo com navegação simples e fluxo
 | Criar evento | Formulário com validação HTML5 (`required`) |
 | Visualizar evento | Página com os dados completos do evento selecionado |
 | Editar evento | Formulário pré-preenchido para atualizar dados existentes |
-| Excluir evento | Confirmação via dialog nativo e remoção por ID |
-| Feedback | `sucesso.php` mostra o resultado das operações (`criado`, `atualizado`, `excluido`) |
+| Excluir evento | Confirmação via dialog nativo e remoção do registro |
+| Feedback | Página de sucesso mostra o resultado das operações |
 
 ## Estrutura do projeto
 
+A nova estrutura do projeto adota conceitos sólidos de arquitetura MVC:
+
 ```
 sistema-eventos/
-├── index.php
-├── criar_evento.php
-├── detalhes_evento.php
-├── editar_evento.php
-├── sucesso.php
-├── app/
-│   ├── config.php
-│   ├── create_event.php
-│   ├── delete_event.php
-│   ├── list_event.php
-│   ├── update_event.php
-│   └── partials/
-│       ├── delete_dialog.php
-│       ├── event_form.php
-│       ├── event_table.php
-│       └── header.php
-└── public/
-    └── assets/
-        ├── css/
-        │   ├── alerts.css
-        │   ├── buttons.css
-        │   ├── forms.css
-        │   ├── header.css
-        │   ├── layout.css
-        │   ├── modal.css
-        │   ├── reset.css
-        │   ├── responsive.css
-        │   ├── style.css
-        │   ├── tables.css
-        │   ├── typography.css
-        │   ├── utilities.css
-        │   └── variables.css
-        └── js/
-            └── delete_dialog.js
+├── app/                  # Lógica de negócio e controllers
+│   ├── Controllers/      # Controladores da aplicação
+│   ├── Model/            # Modelos de dados do domínio
+│   └── Repository/       # Repositórios para acesso a dados (Interfaces e Implementação)
+├── config/               # Arquivos de configuração da aplicação
+├── core/                 # Núcleo do framework customizado (Router, Http Request/Response, View)
+├── public/               # Document root do servidor web
+│   ├── assets/           # Arquivos estáticos (CSS e JS)
+│   └── index.php         # Entry point da aplicação (Front Controller)
+├── resources/            # Views e componentes de UI
+│   ├── components/       # Partials reutilizáveis (header, tables, dialogs)
+│   └── views/            # Páginas da aplicação
+├── routes/               # Definição das rotas HTTP (web.php)
+└── composer.json         # Dependências e mapeamento de Autoloading (PSR-4)
 ```
 
 ## Como executar (local)
 
-Pré-requisitos: PHP 7+, servidor local como XAMPP, LAMP ou MAMP.
+Pré-requisitos: PHP 7.4+, servidor local como XAMPP, LAMP ou MAMP e Composer.
 
-1. Coloque a pasta `sistema-eventos` em `htdocs` ou na pasta pública do servidor.
-2. Acesse `http://localhost/sistema-eventos/` no navegador.
+1. Clone o repositório ou baixe os arquivos.
+2. Na raiz do projeto, configure o autoload do Composer:
+   ```bash
+   composer dump-autoload
+   ```
+3. Aponte o document root do seu servidor para a pasta `public/` (ou configure um Virtual Host apontando para ela). Se usar o servidor embutido do PHP, execute na raiz do projeto:
+   ```bash
+   php -S localhost:8000 -t public
+   ```
+4. Acesse `http://localhost:8000/` no navegador.
+
+> [!NOTE]
+> Se você utilizar um servidor como XAMPP e colocar a pasta em `htdocs/sistema-eventos/` sem configurar um Virtual Host, a URL de acesso será `http://localhost/sistema-eventos/public/`.
 
 ## Detalhes de implementação
 
-### Funções CRUD (`app/config.php`)
+### Roteamento (`core/Router.php` e `routes/web.php`)
 
-As responsabilidades principais ficam concentradas nas funções abaixo:
+O sistema agora possui um motor de roteamento simples baseado em métodos HTTP (GET, POST). As rotas direcionam as requisições para os seus respectivos Controllers e métodos, centralizando o fluxo de entrada.
 
-- `addEvent(array $evento)` cria novo evento e atribui ID
-- `getEvents(): array` retorna a lista de eventos da sessão
-- `getEventById(int $id): ?array` busca um evento pelo ID
-- `updateEvent(int $id, array $novoevento)` atualiza um evento existente
-- `deleteEvent(int $id)` remove um evento pelo ID
+### Controllers (`app/Controllers`)
 
-### Processamento de formulários
+Os Controllers interceptam a requisição, processam as lógicas interagindo com os Models/Repositories e devolvem a View compilada:
+- `HomeController` lida com a página inicial do sistema.
+- `EventoController` possui os métodos para as ações CRUD (`index`, `create`, `store`, `show`, `edit`, `update`, `delete`).
 
-- `app/create_event.php` recebe `POST` e chama `addEvent()`
-- `app/update_event.php` recebe `POST` com ID e chama `updateEvent()`
-- `app/delete_event.php` recebe `POST` com ID e chama `deleteEvent()`
+### Repository Pattern (`app/Repository/EventoRepository.php`)
+
+A persistência de dados foi isolada na interface `EventoRepositoryInterface`. Atualmente os eventos ainda ficam salvos em `$_SESSION`, mas este padrão garante que a implementação futura de um banco de dados (MySQL/PostgreSQL) não alterará os Controllers, obedecendo o princípio de Inversão de Dependência (SOLID).
 
 ### Interatividade
 
-`public/assets/js/delete_dialog.js` controla a abertura do dialog de confirmação, preenche o ID do evento e fecha a janela ao cancelar.
-
-### Mensagens de sucesso
-
-`sucesso.php` usa o parâmetro `?evento=` para exibir mensagens específicas de `criado`, `atualizado` e `excluido`.
+A exclusão de eventos utiliza `public/assets/js/delete_dialog.js`, que controla a abertura nativa do elemento `<dialog>`, preenche dinamicamente o formulário com o ID do evento a ser excluído e submete ou fecha a janela.
 
 ## Limitações e próximos passos
 
-- Dados armazenados apenas em sessão, então são voláteis
-- Migração para banco de dados ainda é o próximo passo natural
-- Validação de backend e tratamento de erros podem ser reforçados
-- Autenticação e autorização ainda não foram implementadas
+- **Persistência de Dados**: Migração de sessão volátil para banco de dados relacional.
+- **Validação Robusta**: Implementação de `FormRequests` ou validadores no backend para os dados de entrada.
+- **Segurança**: Adição de CSRF tokens e autenticação/autorização de usuários.
+- **Filtros e Paginação**: Melhoria da listagem com busca e divisão em páginas.
 
 ## Aprendizados
 
-- Fluxo HTTP com GET e POST e redirecionamentos
-- Manipulação de formulários e sanitização básica
-- Estruturação de código PHP com partials reutilizáveis
-- Uso de JavaScript para melhorar a UX com Dialog API
-
-- `?evento=criado` → "Evento Criado com Sucesso!"
-- `?evento=atualizado` → "Evento Atualizado com Sucesso!"
-- `?evento=excluido` → "Evento Excluído com Sucesso!"
-
-## 🎯 Próximos Passos (Melhorias Futuras)
-
-- Persistência em banco de dados (MySQL, PostgreSQL)
-- Validação de dados com backend (sanitização avançada)
-- Interface com CSS
-- Autenticação e autorização de usuários
-- Busca e filtro de eventos
-- Paginação de eventos
-
-## 📚 Aprendizados
-
-Este projeto foi útil para:
-
-- Entender ciclo requisição/resposta HTTP (GET, POST)
-- Trabalhar com formulários HTML (criação e edição)
-- Manipular dados em Session PHP com funções
-- Implementar operações CRUD básicas
-- Praticar separação de responsabilidades
-- Usar dialog HTML5 para confirmações seguras
-- Manipulação do DOM com JavaScript puro
-- Event handling e data attributes
-- Redirecionamentos HTTP com parâmetros
-- Comunicação entre páginas via GET/POST
+- Implementação prática do padrão de arquitetura MVC a partir do zero
+- Criação de um Front Controller e Router personalizado para fluxo HTTP
+- Entendimento aprofundado do padrão Repository para injeção e abstração de dependências
+- Autoloading de classes padronizado via Composer (PSR-4)
+- Melhor separação de responsabilidades (SoC - Separation of Concerns)
+- Organização avançada de Views e layouts reutilizáveis
 
 ---
 
 **Status**: Projeto de Estudos Em Andamento
-**Versão**: 1.0 - CRUD com persistência em Sessão  
-**Última Atualização**: 2026  
+**Versão**: 2.0 - Arquitetura MVC com persistência em Sessão
+**Última Atualização**: 2026
 **Licença**: Aberta para fins educacionais

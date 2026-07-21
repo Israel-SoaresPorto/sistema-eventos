@@ -1,0 +1,7 @@
+<?php
+
+require '../vendor/autoload.php';
+require '../config/constants.php';
+require '../routes/web.php';
+
+$router->dispatch();

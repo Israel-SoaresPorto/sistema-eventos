@@ -3,16 +3,18 @@
    ============================================================================ */
 
 dialog {
+  margin: auto;
   border: none;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-xl);
   padding: var(--spacing-xl);
-  max-width: 90%;
-  width: 500px;
+  max-width: var(--container-sm);
+  width: 90%;
 }
 
 dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.5);
+  padding: 1rem;
 }
 
 dialog > div {
@@ -46,20 +48,27 @@ dialog button {
   font-size: var(--font-size-base);
 }
 
-dialog button[type='submit'] {
+dialog button[type="submit"] {
   background-color: var(--color-danger);
-  color: white;
+  color: var(--color-danger-text);
 }
 
-dialog button[type='submit']:hover {
-  background-color: #b91c1c;
+dialog button[type="submit"]:hover {
+  background-color: var(--color-danger-dark);
 }
 
-dialog button[type='button'] {
+dialog button[type="button"] {
   background-color: var(--color-secondary);
-  color: white;
+  color: var(--color-secondary-text);
 }
 
-dialog button[type='button']:hover {
-  background-color: #475569;
+dialog button[type="button"]:hover {
+  background-color: var(--color-secondary-dark);
+}
+
+.dialog-actions {
+  width: 100%;
+  display: flex;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
 }

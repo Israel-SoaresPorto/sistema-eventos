@@ -1,0 +1,10 @@
+{
+    "name": "sistemas/eventos",
+    "description": "Sistema de gerenciamento de eventos",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Core\\": "core/"
+        }
+    }
+}
